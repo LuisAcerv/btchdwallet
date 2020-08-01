@@ -5,23 +5,21 @@ package go.microservice.btchdwallet;
 option go_package = "github.com/LuisAcerv/btchdwallet";
 
 service Wallet {
-    rpc CreateWallet(PostRequest)      returns (Response) {}
-    rpc CreateChildWallet(PostRequest) returns (Response) {}
-    rpc GetAccount(GetRequest)         returns (Response) {}
+    rpc CreateWallet(Request)      returns (Response) {}
+    rpc CreateChildWallet(Request) returns (Response) {}
+    rpc GetWallet(Request)         returns (Response) {}
 }
 
-message GetRequest {
+message Request {
     string Name = 1;
     int64  Pin  = 2;
 }
 
-message PostRequest {
-    string Name = 1;
-    int64  Pin  = 2;
-}
 
 message Response {
-    string Name    = 1;
-    string Address = 2;
-    float  Balance = 3;
+    string Name     = 1;
+    string Address  = 2;
+    string PubKey   = 3;
+    string PrivKey  = 4;
+    float  Balance = 5;
 }

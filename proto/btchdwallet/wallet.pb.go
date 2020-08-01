@@ -31,7 +31,7 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
-type GetRequest struct {
+type Request struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -40,8 +40,8 @@ type GetRequest struct {
 	Pin  int64  `protobuf:"varint,2,opt,name=Pin,proto3" json:"Pin,omitempty"`
 }
 
-func (x *GetRequest) Reset() {
-	*x = GetRequest{}
+func (x *Request) Reset() {
+	*x = Request{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_proto_btchdwallet_wallet_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -49,13 +49,13 @@ func (x *GetRequest) Reset() {
 	}
 }
 
-func (x *GetRequest) String() string {
+func (x *Request) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetRequest) ProtoMessage() {}
+func (*Request) ProtoMessage() {}
 
-func (x *GetRequest) ProtoReflect() protoreflect.Message {
+func (x *Request) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_btchdwallet_wallet_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -67,74 +67,19 @@ func (x *GetRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
-func (*GetRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use Request.ProtoReflect.Descriptor instead.
+func (*Request) Descriptor() ([]byte, []int) {
 	return file_proto_btchdwallet_wallet_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GetRequest) GetName() string {
+func (x *Request) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *GetRequest) GetPin() int64 {
-	if x != nil {
-		return x.Pin
-	}
-	return 0
-}
-
-type PostRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Name string `protobuf:"bytes,1,opt,name=Name,proto3" json:"Name,omitempty"`
-	Pin  int64  `protobuf:"varint,2,opt,name=Pin,proto3" json:"Pin,omitempty"`
-}
-
-func (x *PostRequest) Reset() {
-	*x = PostRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_btchdwallet_wallet_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *PostRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PostRequest) ProtoMessage() {}
-
-func (x *PostRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_btchdwallet_wallet_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PostRequest.ProtoReflect.Descriptor instead.
-func (*PostRequest) Descriptor() ([]byte, []int) {
-	return file_proto_btchdwallet_wallet_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *PostRequest) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *PostRequest) GetPin() int64 {
+func (x *Request) GetPin() int64 {
 	if x != nil {
 		return x.Pin
 	}
@@ -148,13 +93,15 @@ type Response struct {
 
 	Name    string  `protobuf:"bytes,1,opt,name=Name,proto3" json:"Name,omitempty"`
 	Address string  `protobuf:"bytes,2,opt,name=Address,proto3" json:"Address,omitempty"`
-	Balance float32 `protobuf:"fixed32,3,opt,name=Balance,proto3" json:"Balance,omitempty"`
+	PubKey  string  `protobuf:"bytes,3,opt,name=PubKey,proto3" json:"PubKey,omitempty"`
+	PrivKey string  `protobuf:"bytes,4,opt,name=PrivKey,proto3" json:"PrivKey,omitempty"`
+	Balance float32 `protobuf:"fixed32,5,opt,name=Balance,proto3" json:"Balance,omitempty"`
 }
 
 func (x *Response) Reset() {
 	*x = Response{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_btchdwallet_wallet_proto_msgTypes[2]
+		mi := &file_proto_btchdwallet_wallet_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -167,7 +114,7 @@ func (x *Response) String() string {
 func (*Response) ProtoMessage() {}
 
 func (x *Response) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_btchdwallet_wallet_proto_msgTypes[2]
+	mi := &file_proto_btchdwallet_wallet_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -180,7 +127,7 @@ func (x *Response) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Response.ProtoReflect.Descriptor instead.
 func (*Response) Descriptor() ([]byte, []int) {
-	return file_proto_btchdwallet_wallet_proto_rawDescGZIP(), []int{2}
+	return file_proto_btchdwallet_wallet_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Response) GetName() string {
@@ -193,6 +140,20 @@ func (x *Response) GetName() string {
 func (x *Response) GetAddress() string {
 	if x != nil {
 		return x.Address
+	}
+	return ""
+}
+
+func (x *Response) GetPubKey() string {
+	if x != nil {
+		return x.PubKey
+	}
+	return ""
+}
+
+func (x *Response) GetPrivKey() string {
+	if x != nil {
+		return x.PrivKey
 	}
 	return ""
 }
@@ -210,41 +171,40 @@ var file_proto_btchdwallet_wallet_proto_rawDesc = []byte{
 	0x0a, 0x1e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61, 0x6c,
 	0x6c, 0x65, 0x74, 0x2f, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
 	0x12, 0x1b, 0x67, 0x6f, 0x2e, 0x6d, 0x69, 0x63, 0x72, 0x6f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
-	0x65, 0x2e, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x22, 0x32, 0x0a,
-	0x0a, 0x47, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x4e,
+	0x65, 0x2e, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x22, 0x2f, 0x0a,
+	0x07, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x4e, 0x61, 0x6d, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x10, 0x0a, 0x03,
+	0x50, 0x69, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x03, 0x50, 0x69, 0x6e, 0x22, 0x84,
+	0x01, 0x0a, 0x08, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x4e,
 	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x4e, 0x61, 0x6d, 0x65, 0x12,
-	0x10, 0x0a, 0x03, 0x50, 0x69, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x03, 0x50, 0x69,
-	0x6e, 0x22, 0x33, 0x0a, 0x0b, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x12, 0x12, 0x0a, 0x04, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
-	0x4e, 0x61, 0x6d, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x50, 0x69, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x03, 0x52, 0x03, 0x50, 0x69, 0x6e, 0x22, 0x52, 0x0a, 0x08, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x04, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73,
-	0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x12, 0x18, 0x0a, 0x07, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x02, 0x52, 0x07, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x32, 0xb3, 0x02, 0x0a, 0x06, 0x57,
-	0x61, 0x6c, 0x6c, 0x65, 0x74, 0x12, 0x61, 0x0a, 0x0c, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x57,
-	0x61, 0x6c, 0x6c, 0x65, 0x74, 0x12, 0x28, 0x2e, 0x67, 0x6f, 0x2e, 0x6d, 0x69, 0x63, 0x72, 0x6f,
-	0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61, 0x6c,
-	0x6c, 0x65, 0x74, 0x2e, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
-	0x25, 0x2e, 0x67, 0x6f, 0x2e, 0x6d, 0x69, 0x63, 0x72, 0x6f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
-	0x65, 0x2e, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x66, 0x0a, 0x11, 0x43, 0x72, 0x65, 0x61,
-	0x74, 0x65, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x12, 0x28, 0x2e,
-	0x67, 0x6f, 0x2e, 0x6d, 0x69, 0x63, 0x72, 0x6f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e,
-	0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x50, 0x6f, 0x73, 0x74,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x25, 0x2e, 0x67, 0x6f, 0x2e, 0x6d, 0x69, 0x63,
-	0x72, 0x6f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77,
-	0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
-	0x12, 0x5e, 0x0a, 0x0a, 0x47, 0x65, 0x74, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x27,
-	0x2e, 0x67, 0x6f, 0x2e, 0x6d, 0x69, 0x63, 0x72, 0x6f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x2e, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x47, 0x65, 0x74,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x25, 0x2e, 0x67, 0x6f, 0x2e, 0x6d, 0x69, 0x63,
-	0x72, 0x6f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77,
-	0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
-	0x42, 0x22, 0x5a, 0x20, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x4c,
-	0x75, 0x69, 0x73, 0x41, 0x63, 0x65, 0x72, 0x76, 0x2f, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61,
-	0x6c, 0x6c, 0x65, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x18, 0x0a, 0x07, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x50, 0x75, 0x62,
+	0x4b, 0x65, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x50, 0x75, 0x62, 0x4b, 0x65,
+	0x79, 0x12, 0x18, 0x0a, 0x07, 0x50, 0x72, 0x69, 0x76, 0x4b, 0x65, 0x79, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x07, 0x50, 0x72, 0x69, 0x76, 0x4b, 0x65, 0x79, 0x12, 0x18, 0x0a, 0x07, 0x42,
+	0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x02, 0x52, 0x07, 0x42, 0x61,
+	0x6c, 0x61, 0x6e, 0x63, 0x65, 0x32, 0xa7, 0x02, 0x0a, 0x06, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74,
+	0x12, 0x5d, 0x0a, 0x0c, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74,
+	0x12, 0x24, 0x2e, 0x67, 0x6f, 0x2e, 0x6d, 0x69, 0x63, 0x72, 0x6f, 0x73, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x2e, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x25, 0x2e, 0x67, 0x6f, 0x2e, 0x6d, 0x69, 0x63, 0x72,
+	0x6f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61,
+	0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12,
+	0x62, 0x0a, 0x11, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x57, 0x61,
+	0x6c, 0x6c, 0x65, 0x74, 0x12, 0x24, 0x2e, 0x67, 0x6f, 0x2e, 0x6d, 0x69, 0x63, 0x72, 0x6f, 0x73,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61, 0x6c, 0x6c,
+	0x65, 0x74, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x25, 0x2e, 0x67, 0x6f, 0x2e,
+	0x6d, 0x69, 0x63, 0x72, 0x6f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x62, 0x74, 0x63,
+	0x68, 0x64, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x00, 0x12, 0x5a, 0x0a, 0x09, 0x47, 0x65, 0x74, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74,
+	0x12, 0x24, 0x2e, 0x67, 0x6f, 0x2e, 0x6d, 0x69, 0x63, 0x72, 0x6f, 0x73, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x2e, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x25, 0x2e, 0x67, 0x6f, 0x2e, 0x6d, 0x69, 0x63, 0x72,
+	0x6f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61,
+	0x6c, 0x6c, 0x65, 0x74, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42,
+	0x22, 0x5a, 0x20, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x4c, 0x75,
+	0x69, 0x73, 0x41, 0x63, 0x65, 0x72, 0x76, 0x2f, 0x62, 0x74, 0x63, 0x68, 0x64, 0x77, 0x61, 0x6c,
+	0x6c, 0x65, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -259,19 +219,18 @@ func file_proto_btchdwallet_wallet_proto_rawDescGZIP() []byte {
 	return file_proto_btchdwallet_wallet_proto_rawDescData
 }
 
-var file_proto_btchdwallet_wallet_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_proto_btchdwallet_wallet_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_proto_btchdwallet_wallet_proto_goTypes = []interface{}{
-	(*GetRequest)(nil),  // 0: go.microservice.btchdwallet.GetRequest
-	(*PostRequest)(nil), // 1: go.microservice.btchdwallet.PostRequest
-	(*Response)(nil),    // 2: go.microservice.btchdwallet.Response
+	(*Request)(nil),  // 0: go.microservice.btchdwallet.Request
+	(*Response)(nil), // 1: go.microservice.btchdwallet.Response
 }
 var file_proto_btchdwallet_wallet_proto_depIdxs = []int32{
-	1, // 0: go.microservice.btchdwallet.Wallet.CreateWallet:input_type -> go.microservice.btchdwallet.PostRequest
-	1, // 1: go.microservice.btchdwallet.Wallet.CreateChildWallet:input_type -> go.microservice.btchdwallet.PostRequest
-	0, // 2: go.microservice.btchdwallet.Wallet.GetAccount:input_type -> go.microservice.btchdwallet.GetRequest
-	2, // 3: go.microservice.btchdwallet.Wallet.CreateWallet:output_type -> go.microservice.btchdwallet.Response
-	2, // 4: go.microservice.btchdwallet.Wallet.CreateChildWallet:output_type -> go.microservice.btchdwallet.Response
-	2, // 5: go.microservice.btchdwallet.Wallet.GetAccount:output_type -> go.microservice.btchdwallet.Response
+	0, // 0: go.microservice.btchdwallet.Wallet.CreateWallet:input_type -> go.microservice.btchdwallet.Request
+	0, // 1: go.microservice.btchdwallet.Wallet.CreateChildWallet:input_type -> go.microservice.btchdwallet.Request
+	0, // 2: go.microservice.btchdwallet.Wallet.GetWallet:input_type -> go.microservice.btchdwallet.Request
+	1, // 3: go.microservice.btchdwallet.Wallet.CreateWallet:output_type -> go.microservice.btchdwallet.Response
+	1, // 4: go.microservice.btchdwallet.Wallet.CreateChildWallet:output_type -> go.microservice.btchdwallet.Response
+	1, // 5: go.microservice.btchdwallet.Wallet.GetWallet:output_type -> go.microservice.btchdwallet.Response
 	3, // [3:6] is the sub-list for method output_type
 	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -286,7 +245,7 @@ func file_proto_btchdwallet_wallet_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_proto_btchdwallet_wallet_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRequest); i {
+			switch v := v.(*Request); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -298,18 +257,6 @@ func file_proto_btchdwallet_wallet_proto_init() {
 			}
 		}
 		file_proto_btchdwallet_wallet_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PostRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_proto_btchdwallet_wallet_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Response); i {
 			case 0:
 				return &v.state
@@ -328,7 +275,7 @@ func file_proto_btchdwallet_wallet_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_proto_btchdwallet_wallet_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -354,9 +301,9 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type WalletClient interface {
-	CreateWallet(ctx context.Context, in *PostRequest, opts ...grpc.CallOption) (*Response, error)
-	CreateChildWallet(ctx context.Context, in *PostRequest, opts ...grpc.CallOption) (*Response, error)
-	GetAccount(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*Response, error)
+	CreateWallet(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+	CreateChildWallet(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+	GetWallet(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 }
 
 type walletClient struct {
@@ -367,7 +314,7 @@ func NewWalletClient(cc grpc.ClientConnInterface) WalletClient {
 	return &walletClient{cc}
 }
 
-func (c *walletClient) CreateWallet(ctx context.Context, in *PostRequest, opts ...grpc.CallOption) (*Response, error) {
+func (c *walletClient) CreateWallet(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
 	err := c.cc.Invoke(ctx, "/go.microservice.btchdwallet.Wallet/CreateWallet", in, out, opts...)
 	if err != nil {
@@ -376,7 +323,7 @@ func (c *walletClient) CreateWallet(ctx context.Context, in *PostRequest, opts .
 	return out, nil
 }
 
-func (c *walletClient) CreateChildWallet(ctx context.Context, in *PostRequest, opts ...grpc.CallOption) (*Response, error) {
+func (c *walletClient) CreateChildWallet(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
 	err := c.cc.Invoke(ctx, "/go.microservice.btchdwallet.Wallet/CreateChildWallet", in, out, opts...)
 	if err != nil {
@@ -385,9 +332,9 @@ func (c *walletClient) CreateChildWallet(ctx context.Context, in *PostRequest, o
 	return out, nil
 }
 
-func (c *walletClient) GetAccount(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*Response, error) {
+func (c *walletClient) GetWallet(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/go.microservice.btchdwallet.Wallet/GetAccount", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/go.microservice.btchdwallet.Wallet/GetWallet", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -396,23 +343,23 @@ func (c *walletClient) GetAccount(ctx context.Context, in *GetRequest, opts ...g
 
 // WalletServer is the server API for Wallet service.
 type WalletServer interface {
-	CreateWallet(context.Context, *PostRequest) (*Response, error)
-	CreateChildWallet(context.Context, *PostRequest) (*Response, error)
-	GetAccount(context.Context, *GetRequest) (*Response, error)
+	CreateWallet(context.Context, *Request) (*Response, error)
+	CreateChildWallet(context.Context, *Request) (*Response, error)
+	GetWallet(context.Context, *Request) (*Response, error)
 }
 
 // UnimplementedWalletServer can be embedded to have forward compatible implementations.
 type UnimplementedWalletServer struct {
 }
 
-func (*UnimplementedWalletServer) CreateWallet(context.Context, *PostRequest) (*Response, error) {
+func (*UnimplementedWalletServer) CreateWallet(context.Context, *Request) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateWallet not implemented")
 }
-func (*UnimplementedWalletServer) CreateChildWallet(context.Context, *PostRequest) (*Response, error) {
+func (*UnimplementedWalletServer) CreateChildWallet(context.Context, *Request) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateChildWallet not implemented")
 }
-func (*UnimplementedWalletServer) GetAccount(context.Context, *GetRequest) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAccount not implemented")
+func (*UnimplementedWalletServer) GetWallet(context.Context, *Request) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWallet not implemented")
 }
 
 func RegisterWalletServer(s *grpc.Server, srv WalletServer) {
@@ -420,7 +367,7 @@ func RegisterWalletServer(s *grpc.Server, srv WalletServer) {
 }
 
 func _Wallet_CreateWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PostRequest)
+	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -432,13 +379,13 @@ func _Wallet_CreateWallet_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/go.microservice.btchdwallet.Wallet/CreateWallet",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WalletServer).CreateWallet(ctx, req.(*PostRequest))
+		return srv.(WalletServer).CreateWallet(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Wallet_CreateChildWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PostRequest)
+	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -450,25 +397,25 @@ func _Wallet_CreateChildWallet_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/go.microservice.btchdwallet.Wallet/CreateChildWallet",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WalletServer).CreateChildWallet(ctx, req.(*PostRequest))
+		return srv.(WalletServer).CreateChildWallet(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Wallet_GetAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
+func _Wallet_GetWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WalletServer).GetAccount(ctx, in)
+		return srv.(WalletServer).GetWallet(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/go.microservice.btchdwallet.Wallet/GetAccount",
+		FullMethod: "/go.microservice.btchdwallet.Wallet/GetWallet",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WalletServer).GetAccount(ctx, req.(*GetRequest))
+		return srv.(WalletServer).GetWallet(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -486,8 +433,8 @@ var _Wallet_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Wallet_CreateChildWallet_Handler,
 		},
 		{
-			MethodName: "GetAccount",
-			Handler:    _Wallet_GetAccount_Handler,
+			MethodName: "GetWallet",
+			Handler:    _Wallet_GetWallet_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
