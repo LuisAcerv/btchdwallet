@@ -1,0 +1,7 @@
+.vscode
+.cache
+.DS_Store
+*.txt
+
+# Config
+config.yml
