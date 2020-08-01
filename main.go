@@ -3,11 +3,9 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"log"
 	"net"
-	"strconv"
 
 	"github.com/LuisAcerv/btchdwallet/crypt"
 	"github.com/LuisAcerv/btchdwallet/db"
@@ -32,19 +30,11 @@ func (s *server) CreateWallet(ctx context.Context, in *pb.Request) (*pb.Response
 	fmt.Printf("\nCreating new wallet: %s\n", in.Name)
 	fmt.Println()
 
-	if len(strconv.FormatInt(in.Pin, 10)) < 6 {
-		fmt.Println("Error: Pin length is invalid. Pin must have six digits")
-		return &pb.Response{}, errors.New("Error: Pin length is invalid. Pin must have six digits")
-	}
-
-	// 1. Get the pin from request
-	pin := in.Pin
+	// 1. Generate phrase
+	pub, priv, mnemonic := wallet.CreateWallet()
 
 	// 2. Generate the encryption hash from pin
-	encryptionHash := crypt.GenerateHashFromPin(string(pin))
-
-	// 3. Generate HD Wallet
-	pub, priv := wallet.CreateWallet()
+	encryptionHash := crypt.GenerateHashFromPin(mnemonic)
 
 	// 4. Encrypt the generated KeyPair
 	walletString := fmt.Sprintf(`{"name":"%s" ,"pub": "%s", "priv": "%s"}`, in.Name, pub, priv)
@@ -53,7 +43,7 @@ func (s *server) CreateWallet(ctx context.Context, in *pb.Request) (*pb.Response
 	// 5. Save the to DB
 	db.SaveWallet(in.Name, []byte(in.Name), encrypted)
 
-	return &pb.Response{Name: in.Name, PubKey: pub, PrivKey: priv, Balance: 0}, nil
+	return &pb.Response{Name: in.Name, PubKey: pub, PrivKey: priv, Mnemonic: mnemonic, Balance: 0}, nil
 }
 
 func (s *server) GetWallet(ctx context.Context, in *pb.Request) (*pb.Response, error) {
@@ -61,16 +51,8 @@ func (s *server) GetWallet(ctx context.Context, in *pb.Request) (*pb.Response, e
 	fmt.Printf("\nGetting wallet: %s\n", in.Name)
 	fmt.Println()
 
-	if len(strconv.FormatInt(in.Pin, 10)) < 6 {
-		fmt.Println("Error: Pin length is invalid. Pin must have six digits")
-		return &pb.Response{}, errors.New("Error: Pin length is invalid. Pin must have six digits")
-	}
-
-	// 1. Get the pin from request
-	pin := in.Pin
-
 	// 2. Generate the encryption hash from pin
-	encryptionHash := crypt.GenerateHashFromPin(string(pin))
+	encryptionHash := crypt.GenerateHashFromPin(in.Mnemonic)
 
 	// 3. GetWallet
 	encryptedWallet := db.GetWallet([]byte(in.Name))

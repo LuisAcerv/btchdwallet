@@ -12,7 +12,7 @@ import (
 
 // CreateHash returns random 32 byte array and it's hex string to be stored
 func CreateHash() string {
-	key := make([]byte, 32)
+	key := make([]byte, 8)
 
 	_, err := rand.Read(key)
 	if err != nil {

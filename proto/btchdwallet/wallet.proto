@@ -11,8 +11,8 @@ service Wallet {
 }
 
 message Request {
-    string Name = 1;
-    int64  Pin  = 2;
+    string Name      = 1;
+    string Mnemonic  = 2;
 }
 
 
@@ -21,5 +21,6 @@ message Response {
     string Address  = 2;
     string PubKey   = 3;
     string PrivKey  = 4;
-    float  Balance = 5;
+    string Mnemonic = 5;
+    float  Balance  = 6;
 }

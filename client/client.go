@@ -13,7 +13,7 @@ import (
 
 var address = "localhost:50055"
 
-func createWallet(name string, pin int64) {
+func createWallet(name string) {
 	defer func() {
 		if err := recover(); err != nil {
 			fmt.Println(err)
@@ -35,15 +35,15 @@ func createWallet(name string, pin int64) {
 	ctx, cancel := context.WithDeadline(context.Background(), clientDeadline)
 	defer cancel()
 
-	r, err := c.CreateWallet(ctx, &pb.Request{Name: name, Pin: int64(pin)})
+	r, err := c.CreateWallet(ctx, &pb.Request{Name: name})
 	if err != nil {
 		log.Fatalf("Error: %v", err)
 		return
 	}
-	log.Printf("\n\nNew Wallet Created:\n\nName: %s\n\nPublic Key: %s\n\nPrivate Key: %s\n\n", r.Name, r.PubKey, r.PrivKey)
+	log.Printf("\n\nNew Wallet Created:\n\n > Name: %s\n\n > Public Key: %s\n\n > Private Key: %s\n\n > Mnemonic: %s", r.Name, r.PubKey, r.PrivKey, r.Mnemonic)
 }
 
-func getWallet(name string, pin int64) {
+func getWallet(name string, mnemonic string) {
 	defer func() {
 		if err := recover(); err != nil {
 			fmt.Println(err)
@@ -65,7 +65,7 @@ func getWallet(name string, pin int64) {
 	ctx, cancel := context.WithDeadline(context.Background(), clientDeadline)
 	defer cancel()
 
-	r, err := c.GetWallet(ctx, &pb.Request{Name: name, Pin: int64(pin)})
+	r, err := c.GetWallet(ctx, &pb.Request{Name: name, Mnemonic: mnemonic})
 	if err != nil {
 		log.Fatalf("Error: %v", err)
 		return
@@ -76,19 +76,19 @@ func getWallet(name string, pin int64) {
 func main() {
 	method := flag.String("m", "default", "Method to be executed")
 	name := flag.String("n", "default", "Wallet name")
-	pin := flag.Int64("p", 0, "Encryption Pin")
+	mnemonic := flag.String("mne", "default", "Encryption Pin")
 
 	flag.Parse()
 
 	switch *method {
 	case "create-wallet":
 		fmt.Println("Creating a new wallet...")
-		createWallet(*name, *pin)
+		createWallet(*name)
 		return
 
 	case "get-wallet":
 		fmt.Println("Creating a new wallet...")
-		getWallet(*name, *pin)
+		getWallet(*name, *mnemonic)
 		return
 	}
 
