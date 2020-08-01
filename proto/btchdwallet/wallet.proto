@@ -11,16 +11,17 @@ service Wallet {
 }
 
 message Request {
-    string Name      = 1;
     string Mnemonic  = 2;
 }
 
 
 message Response {
-    string Name     = 1;
-    string Address  = 2;
-    string PubKey   = 3;
-    string PrivKey  = 4;
-    string Mnemonic = 5;
-    float  Balance  = 6;
+    string Address            = 2;
+    string PubKey             = 3;
+    string PrivKey            = 4;
+    string Mnemonic           = 5;
+    int64  Balance            = 6;
+    int64  TotalReceived      = 7;
+    int64  totalSent          = 8;
+    int64  unconfirmedBalance = 9;
 }

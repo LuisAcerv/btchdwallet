@@ -1,4 +1,4 @@
-package db
+package config
 
 import (
 	"io/ioutil"
@@ -8,7 +8,10 @@ import (
 )
 
 type Config struct {
-	Version string `yaml:"version"`
+	Version     string `yaml:"version"`
+	Blockcypher struct {
+		Token string `yaml:"token"`
+	} `yaml:"blockcypher"`
 }
 
 // ParseConfig from config.yml

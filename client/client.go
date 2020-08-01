@@ -13,7 +13,7 @@ import (
 
 var address = "localhost:50055"
 
-func createWallet(name string) {
+func createWallet() {
 	defer func() {
 		if err := recover(); err != nil {
 			fmt.Println(err)
@@ -35,15 +35,15 @@ func createWallet(name string) {
 	ctx, cancel := context.WithDeadline(context.Background(), clientDeadline)
 	defer cancel()
 
-	r, err := c.CreateWallet(ctx, &pb.Request{Name: name})
+	r, err := c.CreateWallet(ctx, &pb.Request{})
 	if err != nil {
 		log.Fatalf("Error: %v", err)
 		return
 	}
-	log.Printf("\n\nNew Wallet Created:\n\n > Name: %s\n\n > Public Key: %s\n\n > Private Key: %s\n\n > Mnemonic: %s", r.Name, r.PubKey, r.PrivKey, r.Mnemonic)
+	log.Printf("\n\nNew Wallet Created:\n\n > Public Key: %s\n\n > Private Key: %s\n\n > Mnemonic: %s", r.PubKey, r.PrivKey, r.Mnemonic)
 }
 
-func getWallet(name string, mnemonic string) {
+func getWallet(mnemonic string) {
 	defer func() {
 		if err := recover(); err != nil {
 			fmt.Println(err)
@@ -65,30 +65,27 @@ func getWallet(name string, mnemonic string) {
 	ctx, cancel := context.WithDeadline(context.Background(), clientDeadline)
 	defer cancel()
 
-	r, err := c.GetWallet(ctx, &pb.Request{Name: name, Mnemonic: mnemonic})
+	r, err := c.GetWallet(ctx, &pb.Request{Mnemonic: mnemonic})
 	if err != nil {
 		log.Fatalf("Error: %v", err)
 		return
 	}
-	log.Printf("\n\nWallet Decrypted:\n\n > Name: %s\n\n > Public Key: %s\n\n > Private Key: %s\n\n", r.Name, r.PubKey, r.PrivKey)
+	log.Printf("\n\nWallet Decrypted:\n\n > Address: %s\n\n > Public Key: %s\n\n > Private Key: %s\n\n > Balance: %v\n\n", r.Address, r.PubKey, r.PrivKey, r.Balance)
 }
 
 func main() {
 	method := flag.String("m", "default", "Method to be executed")
-	name := flag.String("n", "default", "Wallet name")
 	mnemonic := flag.String("mne", "default", "Encryption Pin")
 
 	flag.Parse()
 
 	switch *method {
 	case "create-wallet":
-		fmt.Println("Creating a new wallet...")
-		createWallet(*name)
+		createWallet()
 		return
 
 	case "get-wallet":
-		fmt.Println("Creating a new wallet...")
-		getWallet(*name, *mnemonic)
+		getWallet(*mnemonic)
 		return
 	}
 
