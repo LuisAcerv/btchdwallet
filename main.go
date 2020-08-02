@@ -25,27 +25,27 @@ func (s *server) CreateWallet(ctx context.Context, in *pb.Request) (*pb.Response
 	fmt.Println()
 	fmt.Println("\nCreating new wallet")
 
-	addr, pub, priv, mnemonic := wallet.CreateWallet()
+	wallet := wallet.CreateWallet()
 
-	return &pb.Response{Address: addr, PubKey: pub, PrivKey: priv, Mnemonic: mnemonic, Balance: 0}, nil
+	return wallet, nil
 }
 
 func (s *server) GetWallet(ctx context.Context, in *pb.Request) (*pb.Response, error) {
 	fmt.Println()
 	fmt.Println("\nGetting wallet data")
 
-	address, pub, priv := wallet.DecodeWallet(in.Mnemonic)
+	wallet := wallet.DecodeWallet(in.Mnemonic)
 
-	return &pb.Response{Address: address, PrivKey: priv, PubKey: pub}, nil
+	return wallet, nil
 }
 
 func (s *server) GetBalance(ctx context.Context, in *pb.Request) (*pb.Response, error) {
 	fmt.Println()
 	fmt.Println("\nGetting Balance data")
 
-	balance, totalReceived, totalSent, unconfirmedBalance := wallet.GetBalance(in.Address)
+	balance := wallet.GetBalance(in.Address)
 
-	return &pb.Response{Address: in.Address, Balance: int64(balance), TotalReceived: int64(totalReceived), TotalSent: int64(totalSent), UnconfirmedBalance: int64(unconfirmedBalance)}, nil
+	return balance, nil
 }
 
 func main() {

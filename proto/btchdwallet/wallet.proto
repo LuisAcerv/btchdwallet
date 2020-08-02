@@ -18,12 +18,12 @@ message Request {
 
 
 message Response {
-    string Address            = 2;
-    string PubKey             = 3;
-    string PrivKey            = 4;
-    string Mnemonic           = 5;
-    int64  Balance            = 6;
-    int64  TotalReceived      = 7;
-    int64  TotalSent          = 8;
-    int64  UnconfirmedBalance = 9;
+    string Address            = 1;
+    string PubKey             = 2;
+    string PrivKey            = 3;
+    string Mnemonic           = 4;
+    int64  Balance            = 5;
+    int64  TotalReceived      = 6;
+    int64  TotalSent          = 7;
+    int64  UnconfirmedBalance = 8;
 }
