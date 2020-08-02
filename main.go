@@ -36,9 +36,16 @@ func (s *server) GetWallet(ctx context.Context, in *pb.Request) (*pb.Response, e
 
 	address, pub, priv := wallet.DecodeWallet(in.Mnemonic)
 
-	balance, _, _, _ := wallet.GetBalance(address)
+	return &pb.Response{Address: address, PrivKey: priv, PubKey: pub}, nil
+}
 
-	return &pb.Response{Address: address, PrivKey: priv, PubKey: pub, Balance: int64(balance)}, nil
+func (s *server) GetBalance(ctx context.Context, in *pb.Request) (*pb.Response, error) {
+	fmt.Println()
+	fmt.Println("\nGetting Balance data")
+
+	balance, totalReceived, totalSent, unconfirmedBalance := wallet.GetBalance(in.Address)
+
+	return &pb.Response{Address: in.Address, Balance: int64(balance), TotalReceived: int64(totalReceived), TotalSent: int64(totalSent), UnconfirmedBalance: int64(unconfirmedBalance)}, nil
 }
 
 func main() {

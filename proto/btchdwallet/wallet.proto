@@ -8,9 +8,11 @@ service Wallet {
     rpc CreateWallet(Request)      returns (Response) {}
     rpc CreateChildWallet(Request) returns (Response) {}
     rpc GetWallet(Request)         returns (Response) {}
+    rpc GetBalance(Request)        returns (Response) {}
 }
 
 message Request {
+    string Address   = 1;
     string Mnemonic  = 2;
 }
 
@@ -22,6 +24,6 @@ message Response {
     string Mnemonic           = 5;
     int64  Balance            = 6;
     int64  TotalReceived      = 7;
-    int64  totalSent          = 8;
-    int64  unconfirmedBalance = 9;
+    int64  TotalSent          = 8;
+    int64  UnconfirmedBalance = 9;
 }
